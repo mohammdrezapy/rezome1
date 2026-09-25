@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohammadrezapy — Web Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea;
+  --paper:#fffdf8;
+  --ink:#171914;
+  --muted:#6e7168;
+  --line:#dcd9cf;
+  --accent:#b7e35a;
+  --accent-dark:#6f9228;
+  --dark:#20231d;
+  --shadow:0 25px 70px rgba(23,25,20,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:"Vazirmatn","DM Sans",sans-serif;
+  overflow-x:hidden;
+}
+body:selection{background:var(--accent)}
+::selection{background:var(--accent);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+
+/* subtle background */
+body:before{
+  content:"";
+  position:fixed;
+  width:520px;height:520px;
+  border-radius:50%;
+  background:rgba(183,227,90,.16);
+  filter:blur(90px);
+  top:-220px;left:-170px;
+  pointer-events:none;
+}
+body:after{
+  content:"";
+  position:fixed;
+  width:420px;height:420px;
+  border-radius:50%;
+  background:rgba(120,150,255,.08);
+  filter:blur(100px);
+  bottom:-220px;right:-150px;
+  pointer-events:none;
+}
+
+.wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+
+/* navigation */
+header{
+  position:fixed;
+  top:16px;left:0;right:0;
+  z-index:100;
+}
+.navbar{
+  width:min(1120px,calc(100% - 30px));
+  margin:auto;
+  height:66px;
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border:1px solid rgba(23,25,20,.10);
+  border-radius:18px;
+  background:rgba(255,253,248,.78);
+  backdrop-filter:blur(18px);
+  box-shadow:0 12px 40px rgba(23,25,20,.06);
+}
+.logo{font-weight:800;letter-spacing:-1px;font-size:18px}
+.logo span{color:var(--accent-dark)}
+nav{display:flex;gap:7px}
+nav a{
+  font-size:12px;
+  padding:9px 13px;
+  border-radius:10px;
+  color:var(--muted);
+  transition:.25s ease;
+}
+nav a:hover,nav a.active{background:var(--ink);color:#fff}
+.menu{display:none;border:0;background:transparent;font-size:24px;cursor:pointer}
+
+/* hero */
+.hero{
+  min-height:100vh;
+  padding:145px 0 80px;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  align-items:center;
+  gap:70px;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:7px 11px;
+  border:1px solid var(--line);
+  border-radius:100px;
+  color:var(--muted);
+  font-size:10px;
+  background:rgba(255,255,255,.4);
+}
+.dot{width:7px;height:7px;border-radius:50%;background:#77b52d;box-shadow:0 0 0 5px rgba(119,181,45,.12)}
+.hero h1{
+  font-size:clamp(54px,8vw,102px);
+  line-height:.94;
+  letter-spacing:-6px;
+  margin:22px 0;
+  font-weight:800;
+}
+.hero h1 span{
+  display:block;
+  color:transparent;
+  -webkit-text-stroke:1.5px var(--ink);
+}
+.hero-description{
+  max-width:590px;
+  color:var(--muted);
+  line-height:2.1;
+  font-size:13px;
+}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.btn{
+  padding:13px 20px;
+  border-radius:100px;
+  border:1px solid var(--ink);
+  font-size:11px;
+  transition:.3s ease;
+}
+.btn.primary{background:var(--ink);color:#fff}
+.btn:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(23,25,20,.13)}
+.btn.primary:hover{background:#30342a}
+
+/* hero visual */
+.visual{
+  position:relative;
+  height:570px;
+}
+.visual-card{
+  position:absolute;
+  inset:20px 0 20px 20px;
+  border-radius:38px;
+  overflow:hidden;
+  background:#22251f;
+  box-shadow:var(--shadow);
+  transform:rotate(2.5deg);
+  transition:transform .7s cubic-bezier(.2,.8,.2,1);
+}
+.visual-card img{
+  width:100%;height:100%;object-fit:cover;
+  filter:grayscale(.25) contrast(1.05);
+  opacity:.88;
+}
+.visual-card:after{
+  content:"";
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(183,227,90,.18),transparent 40%,rgba(0,0,0,.18));
+}
+.visual:hover .visual-card{transform:rotate(0) translateY(-8px)}
+.floating{
+  position:absolute;
+  z-index:2;
+  background:var(--paper);
+  border:1px solid rgba(23,25,20,.1);
+  box-shadow:0 18px 45px rgba(23,25,20,.12);
+  border-radius:18px;
+  padding:15px 17px;
+}
+.float-one{left:-5px;top:45px}
+.float-two{right:-5px;bottom:45px}
+.floating small{display:block;color:var(--muted);font-size:8px;margin-bottom:6px}
+.floating strong{font-size:12px}
+.signature{
+  position:absolute;
+  left:28px;bottom:75px;z-index:3;
+  color:white;font-size:11px;
+  transform:rotate(-8deg);
+}
+
+/* sections */
+section{padding:110px 0}
+.section-top{display:flex;justify-content:space-between;align-items:end;margin-bottom:42px}
+.section-title{font-size:clamp(30px,4vw,52px);letter-spacing:-2px;font-weight:800}
+.section-index{color:var(--muted);font-size:10px}
+.rule{height:1px;background:var(--line);margin-top:13px}
+
+/* about */
+.about-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}
+.about-photo{
+  aspect-ratio:4/5;
+  border-radius:28px;
+  overflow:hidden;
+  background:#20231d;
+  box-shadow:var(--shadow);
+  position:relative;
+}
+.about-photo img{width:100%;height:100%;object-fit:cover}
+.about-photo:after{
+  content:"MOHAMMADREZAPY";
+  position:absolute;bottom:16px;left:16px;
+  padding:8px 10px;background:rgba(255,253,248,.9);
+  border-radius:9px;font-size:8px;font-weight:700;
+}
+.about-copy .lead{font-size:22px;line-height:1.9;font-weight:600;margin-bottom:18px}
+.about-copy p{font-size:12px;color:var(--muted);line-height:2.2}
+.info{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  margin-top:28px;border-top:1px solid var(--line);
+}
+.info div{padding:16px 5px;border-bottom:1px solid var(--line)}
+.info small{display:block;color:var(--muted);font-size:8px;margin-bottom:5px}
+.info strong{font-size:11px}
+
+/* skills */
+.skill-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.skill{
+  padding:22px;
+  background:rgba(255,253,248,.7);
+  border:1px solid var(--line);
+  border-radius:18px;
+  transition:.3s ease;
+}
+.skill:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:#c7c2b4}
+.skill-head{display:flex;justify-content:space-between}
+.skill h3{font-size:14px}.skill b{font-size:10px;color:var(--accent-dark)}
+.skill p{font-size:9px;color:var(--muted);margin:7px 0 14px}
+.bar{height:6px;background:#e4e2da;border-radius:100px;overflow:hidden}
+.bar span{height:100%;display:block;background:var(--accent);border-radius:100px;transform-origin:right;animation:grow 1.2s both}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* projects */
+.projects{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.project{
+  min-height:350px;
+  padding:18px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:22px;
+  transition:.4s cubic-bezier(.2,.8,.2,1);
+}
+.project:hover{transform:translateY(-8px);box-shadow:var(--shadow)}
+.project-art{
+  height:175px;
+  border-radius:15px;
+  margin-bottom:20px;
+  display:grid;place-items:center;
+  background:var(--dark);
+  position:relative;overflow:hidden;
+}
+.project-art:before{
+  content:"";
+  width:115px;height:115px;border-radius:50%;
+  background:var(--accent);
+  filter:blur(2px);
+  transition:.5s;
+}
+.project:hover .project-art:before{transform:scale(1.3)}
+.project-art span{
+  position:absolute;font-weight:800;font-size:12px;color:#fff;
+  z-index:1;letter-spacing:1px
+}
+.project h3{font-size:15px;margin-bottom:9px}
+.project p{font-size:9px;line-height:2;color:var(--muted)}
+.project-foot{display:flex;justify-content:space-between;margin-top:17px;font-size:9px;color:var(--muted)}
+.project-foot a{color:var(--ink);font-weight:700}
+
+/* contact */
+.contact{
+  background:var(--dark);
+  color:#fff;
+  border-radius:32px;
+  padding:55px;
+  position:relative;
+  overflow:hidden;
+}
+.contact:before{
+  content:"";
+  position:absolute;
+  width:350px;height:350px;border-radius:50%;
+  background:var(--accent);filter:blur(100px);opacity:.13;
+  left:-100px;bottom:-150px;
+}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;position:relative}
+.contact h2{font-size:clamp(32px,5vw,62px);line-height:1.1;letter-spacing:-3px}
+.contact h2 span{color:var(--accent)}
+.contact p{color:#a4a99f;line-height:2;margin-top:20px;font-size:11px}
+.email{
+  display:inline-block;margin-top:28px;
+  padding:14px 17px;border:1px solid rgba(183,227,90,.45);
+  color:var(--accent);border-radius:12px;direction:ltr;
+  font-size:11px;transition:.25s;
+}
+.email:hover{background:var(--accent);color:var(--dark)}
+.contact-side{
+  display:flex;align-items:center;justify-content:center;
+  min-height:220px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:22px;
+  padding:30px;
+}
+.contact-side div{font-size:11px;line-height:2.4;color:#a4a99f}
+.contact-side strong{color:#fff}
+
+/* footer */
+footer{padding:30px 0 40px;color:var(--muted);font-size:9px}
+.footer-inner{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:20px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease}
+.reveal.show{opacity:1;transform:none}
+
+/* custom cursor desktop */
+.cursor{
+  position:fixed;width:15px;height:15px;border:1px solid var(--ink);border-radius:50%;
+  pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+  transition:width .2s,height .2s,background .2s;
+}
+.cursor-dot{position:fixed;width:4px;height:4px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:10000;transform:translate(-50%,-50%)}
+@media(max-width:850px){
+  .hero{grid-template-columns:1fr;gap:30px;padding-top:125px}
+  .visual{height:460px;order:-1}
+  .visual-card{inset:10px 10px 10px 0}
+  .about-grid{grid-template-columns:1fr;gap:35px}
+  .about-photo{max-width:480px}
+  .projects{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .contact{padding:35px 25px}
+}
+@media(max-width:650px){
+  .wrap{width:min(100% - 28px,1180px)}
+  .navbar{height:58px}
+  nav{display:none;position:absolute;top:67px;right:0;left:0;padding:10px;background:rgba(255,253,248,.97);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);flex-direction:column}
+  nav.open{display:flex}
+  nav a{padding:12px}
+  .menu{display:block}
+  .hero{padding-top:105px}
+  .hero h1{font-size:55px;letter-spacing:-4px}
+  .visual{height:380px}
+  .floating{padding:11px}.float-one{left:-3px}.float-two{right:-3px}
+  section{padding:75px 0}
+  .section-top{margin-bottom:28px}
+  .about-copy .lead{font-size:18px}
+  .skill-list{grid-template-columns:1fr}
+  .info{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;gap:8px}
+  .cursor,.cursor-dot{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <a class="logo" href="#home">Mohammad<span>rezapy.</span></a>
+    <nav id="nav">
+      <a class="active" href="#home">خانه</a>
+      <a href="#about">درباره من</a>
+      <a href="#skills">مهارت‌ها</a>
+      <a href="#projects">پروژه‌ها</a>
+      <a href="#contact">ارتباط</a>
+    </nav>
+    <button class="menu" id="menu" aria-label="منو">☰</button>
+  </div>
+</header>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<main>
+<section id="home">
+  <div class="wrap hero">
+    <div class="hero-copy reveal">
+      <div class="eyebrow"><i class="dot"></i> آماده برای پروژه‌های جدید</div>
+      <h1>طراحی می‌کنم.<br><span>کد می‌زنم.</span></h1>
+      <p class="hero-description">
+        من محمدرضا هستم؛ فریلنسر و توسعه‌دهنده وب.
+        حدود ۴ سال است که با HTML، CSS، JavaScript، Python، PHP و Photoshop کار می‌کنم
+        و از ساخت تجربه‌های ساده، زیبا و کاربردی لذت می‌برم.
+      </p>
+      <div class="hero-actions">
+        <a class="btn primary" href="#projects">دیدن پروژه‌ها</a>
+        <a class="btn" href="#contact">شروع همکاری</a>
+      </div>
+    </div>
+
+    <div class="visual reveal">
+      <div class="visual-card" id="visualCard">
+        <img src="hacker-about.png" alt="Mohammadrezapy">
+        <div class="signature">Mohammadrezapy / 2026</div>
+      </div>
+      <div class="floating float-one"><small>EXPERIENCE</small><strong>04+ YEARS</strong></div>
+      <div class="floating float-two"><small>BASED IN</small><strong>AJABSHIR</strong></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="section-top">
+      <div><h2 class="section-title">درباره من</h2><div class="rule"></div></div>
+      <span class="section-index">01 / PROFILE</span>
+    </div>
+    <div class="about-grid">
+      <div class="about-photo"><img src="hacker-about.png" alt="تصویر پروفایل"></div>
+      <div class="about-copy">
+        <p class="lead">یک توسعه‌دهنده وب ۱۸ ساله که به ترکیب طراحی خوب و کدنویسی تمیز علاقه دارد.</p>
+        <p>
+          من محمدرضا هستم و با نام کاری Mohammadrezapy فعالیت می‌کنم.
+          در کنار تحصیل در مدرسه تیزهوشان، چند سال است که روی طراحی سایت،
+          برنامه‌نویسی و یادگیری تکنولوژی‌های مختلف کار می‌کنم.
+        </p>
+        <p style="margin-top:14px">
+          هدفم این است که هر پروژه هم از نظر ظاهر جذاب باشد و هم از نظر تجربه کاربری
+          سریع، مرتب و قابل استفاده طراحی شود.
+        </p>
+        <div class="info">
+          <div><small>نام کاری</small><strong>Mohammadrezapy</strong></div>
+          <div><small>سن</small><strong>18</strong></div>
+          <div><small>محل</small><strong>عجب‌شیر</strong></div>
+          <div><small>تحصیلات</small><strong>دیپلم</strong></div>
+          <div><small>تجربه</small><strong>4+ سال</strong></div>
+          <div><small>نوع فعالیت</small><strong>Freelancer</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap reveal">
+    <div class="section-top">
+      <div><h2 class="section-title">مهارت‌ها</h2><div class="rule"></div></div>
+      <span class="section-index">02 / SKILLS</span>
+    </div>
+    <div class="skill-list">
+      <div class="skill"><div class="skill-head"><h3>HTML</h3><b>95%</b></div><p>ساختار و پیاده‌سازی صفحات</p><div class="bar"><span style="width:95%"></span></div></div>
+      <div class="skill"><div class="skill-head"><h3>CSS</h3><b>92%</b></div><p>طراحی رابط و Responsive</p><div class="bar"><span style="width:92%"></span></div></div>
+      <div class="skill"><div class="skill-head"><h3>JavaScript</h3><b>82%</b></div><p>تعامل و منطق سمت کاربر</p><div class="bar"><span style="width:82%"></span></div></div>
+      <div class="skill"><div class="skill-head"><h3>Python</h3><b>80%</b></div><p>برنامه‌نویسی و ابزارسازی</p><div class="bar"><span style="width:80%"></span></div></div>
+      <div class="skill"><div class="skill-head"><h3>PHP</h3><b>78%</b></div><p>Backend و توسعه وب</p><div class="bar"><span style="width:78%"></span></div></div>
+      <div class="skill"><div class="skill-head"><h3>Photoshop</h3><b>75%</b></div><p>طراحی و ویرایش گرافیکی</p><div class="bar"><span style="width:75%"></span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap reveal">
+    <div class="section-top">
+      <div><h2 class="section-title">پروژه‌ها</h2><div class="rule"></div></div>
+      <span class="section-index">03 / WORK</span>
+    </div>
+    <div class="projects">
+      <article class="project">
+        <div class="project-art"><span>PROJECT 01</span></div>
+        <h3>وب‌سایت شخصی</h3>
+        <p>نمونه‌ای برای معرفی شخص، خدمات، مهارت‌ها و پروژه‌ها با طراحی مدرن.</p>
+        <div class="project-foot"><span>HTML / CSS / JS</span><a href="#">مشاهده ↗</a></div>
+      </article>
+      <article class="project">
+        <div class="project-art"><span>PROJECT 02</span></div>
+        <h3>Web Application</h3>
+        <p>محل قرار دادن پروژه دوم، توضیحات کوتاه و تکنولوژی‌های استفاده‌شده.</p>
+        <div class="project-foot"><span>PHP / JS</span><a href="#">مشاهده ↗</a></div>
+      </article>
+      <article class="project">
+        <div class="project-art"><span>PROJECT 03</span></div>
+        <h3>Python Project</h3>
+        <p>یک پروژه پایتون، ابزار شخصی یا هر نمونه‌کاری که می‌خواهی نمایش بدهی.</p>
+        <div class="project-foot"><span>PYTHON</span><a href="#">مشاهده ↗</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap reveal">
+    <div class="contact">
+      <div class="contact-grid">
+        <div>
+          <h2>بیایید چیزی<br><span>خوب بسازیم.</span></h2>
+          <p>برای همکاری روی پروژه‌های وب، طراحی سایت یا یک ایده جدید از طریق ایمیل با من در ارتباط باش.</p>
+          <a class="email" href="mailto:azarpeykan1230@gmail.com">azarpeykan1230@gmail.com</a>
+        </div>
+        <div class="contact-side">
+          <div>
+            <div>نام: <strong>Mohammadrezapy</strong></div>
+            <div>نقش: <strong>Web Developer / Freelancer</strong></div>
+            <div>تجربه: <strong>4+ Years</strong></div>
+            <div>وضعیت: <strong style="color:var(--accent)">Available for work</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 Mohammadrezapy</span>
+    <span>Designed & built with care.</span>
+  </div>
+</footer>
+
+<script>
+/* mobile menu */
+const menu=document.getElementById('menu');
+const nav=document.getElementById('nav');
+menu.addEventListener('click',()=>nav.classList.toggle('open'));
+document.querySelectorAll('nav a').forEach(a=>{
+  a.addEventListener('click',()=>nav.classList.remove('open'));
+});
+
+/* reveal on scroll */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add('show');
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* active navigation */
+const links=[...document.querySelectorAll('nav a')];
+const sections=links.map(a=>document.querySelector(a.getAttribute('href')));
+const sectionObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      links.forEach(link=>link.classList.toggle(
+        'active',
+        link.getAttribute('href')==='#'+entry.target.id
+      ));
+    }
+  });
+},{threshold:.45});
+sections.forEach(section=>section&&sectionObserver.observe(section));
+
+/* subtle image parallax */
+const visual=document.querySelector('.visual');
+const card=document.getElementById('visualCard');
+if(window.matchMedia('(pointer:fine)').matches){
+  visual.addEventListener('mousemove',e=>{
+    const r=visual.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`rotate(${2.5+x*4}deg) translate(${x*7}px,${y*7}px)`;
+  });
+  visual.addEventListener('mouseleave',()=>card.style.transform='rotate(2.5deg)');
+}
+
+/* custom cursor */
+const cursor=document.getElementById('cursor');
+const dot=document.getElementById('cursorDot');
+if(window.matchMedia('(pointer:fine)').matches){
+  document.addEventListener('mousemove',e=>{
+    cursor.style.left=e.clientX+'px';
+    cursor.style.top=e.clientY+'px';
+    dot.style.left=e.clientX+'px';
+    dot.style.top=e.clientY+'px';
+  });
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.style.width='34px';cursor.style.height='34px';cursor.style.background='rgba(183,227,90,.18)'});
+    el.addEventListener('mouseleave',()=>{cursor.style.width='15px';cursor.style.height='15px';cursor.style.background='transparent'});
+  });
+}
+</script>
+</body>
+</html>
